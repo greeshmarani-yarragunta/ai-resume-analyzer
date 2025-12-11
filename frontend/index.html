@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Resume Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>AI-style Resume Analyzer (Free)</h1>
+    <form id="uploadForm">
+      <input type="file" id="resume" name="resume" accept=".pdf,.docx,.doc,.txt" required />
+      <button type="submit">Upload & Analyze</button>
+    </form>
+    <div id="status" class="hidden"></div>
+    <div id="results" class="card hidden"></div>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

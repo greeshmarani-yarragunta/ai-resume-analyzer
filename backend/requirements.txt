@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+requests
+pdfplumber
+python-docx
+flask-cors

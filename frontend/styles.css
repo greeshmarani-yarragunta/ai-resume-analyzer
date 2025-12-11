@@ -1,0 +1,108 @@
+:root{
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --accent: #0b5ed7;
+  --muted: #6b7280;
+  --glass: rgba(20,20,40,0.04);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  margin:0;
+  padding:20px;
+  color:#111827;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+  max-width:920px;
+  margin:0 auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+h1{
+  text-align:center;
+  margin:6px 0 14px;
+  font-size:1.6rem;
+  font-weight:600;
+  color:#0f172a;
+}
+
+.card{
+  background:var(--card);
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 8px 30px var(--glass);
+  margin-top:8px;
+}
+
+form{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+input[type="file"]{
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6eef8;
+  background:transparent;
+  cursor:pointer;
+}
+
+button{
+  padding:10px 16px;
+  border-radius:10px;
+  border:0;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+  box-shadow:0 6px 14px rgba(11,94,215,0.14);
+  transition:transform .08s ease, box-shadow .12s ease;
+}
+
+button:active{ transform:translateY(1px); }
+button:disabled{ opacity:0.6; cursor:not-allowed; box-shadow:none; }
+
+.hidden{ display:none; }
+
+#status{
+  padding:10px;
+  background:#fffaf0;
+  border-left:4px solid #ffd24d;
+  border-radius:8px;
+  margin-top:8px;
+  color:#4b2e00;
+}
+
+/* Results layout */
+#results h2{ margin:0 0 8px; font-size:1.15rem; }
+#results p{ margin:6px 0; color:var(--muted); }
+#results ul{ margin:6px 0 12px 18px; color:var(--muted); }
+
+/* Chart containers */
+canvas{ display:block; width:100% !important; height:280px !important; max-height:420px; }
+
+/* Responsive */
+@media (max-width:600px){
+  body{ padding:12px; }
+  .container{ padding-bottom:40px; }
+  button{ width:100%; }
+  form{ flex-direction:column; gap:8px; }
+  canvas{ height:220px !important; }
+}
+
+/* Tiny utility */
+.small{ font-size:0.92rem; color:var(--muted); }
+.link-like { color: var(--accent); text-decoration: none; font-weight:600; }
