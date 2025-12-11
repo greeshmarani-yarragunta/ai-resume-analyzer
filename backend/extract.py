@@ -1,8 +1,13 @@
 # backend/extract.py
+from __future__ import annotations
+import re
 import pdfplumber
 import docx
-import re
-from skills_db import COMMON_SKILLS, JOB_ROLES   # use COMMON_SKILLS from skills_db
+
+# relative import (important when running as package)
+# at top of backend/extract.py
+from .skills_db import COMMON_SKILLS, JOB_ROLES
+
 
 def extract_text_from_pdf(path):
     text = []
@@ -100,6 +105,44 @@ def score_skill_strengths(text, skills):
 
     return strengths
 
+def score_resume(skills_found, text):
+    """
+    Produce a simple overall resume score (0-100).
+    Heuristics:
+      - base 30
+      - +8 points per detected skill (capped at +40)
+      - +10 if contains word 'project'
+      - +10 if contains 'experience'
+      - +10 if the resume is reasonably long (>400 words)
+      - clamp to 0..100
+    """
+    try:
+        score = 30
+        # skills contribution: up to +40
+        score += min(len(skills_found) * 8, 40)
+
+        t = text.lower() if text else ""
+        if "project" in t:
+            score += 10
+        if "experience" in t:
+            score += 10
+
+        words = len(t.split())
+        if words > 400:
+            score += 10
+
+        # clamp
+        if score > 100:
+            score = 100
+        if score < 0:
+            score = 0
+
+        return int(score)
+    except Exception:
+        # safe fallback
+        return 0
+
+
 def match_jobs(skills_found):
     results = {}
     for role, keywords in JOB_ROLES.items():
@@ -118,3 +161,39 @@ def suggest_missing(skills_found, target_role):
     keywords = JOB_ROLES.get(target_role, [])
     missing = [k for k in keywords if k not in skills_found]
     return missing
+def score_resume(skills_found, text):
+    """
+    Produce a simple overall resume score (0-100).
+    Heuristics:
+      - base 30
+      - +8 points per detected skill (capped at +40)
+      - +10 if contains word 'project'
+      - +10 if contains 'experience'
+      - +10 if the resume is reasonably long (>400 words)
+      - clamp to 0..100
+    """
+    try:
+        score = 30
+        # skills contribution: up to +40
+        score += min(len(skills_found) * 8, 40)
+
+        t = text.lower() if text else ""
+        if "project" in t:
+            score += 10
+        if "experience" in t:
+            score += 10
+
+        words = len(t.split())
+        if words > 400:
+            score += 10
+
+        # clamp
+        if score > 100:
+            score = 100
+        if score < 0:
+            score = 0
+
+        return int(score)
+    except Exception:
+        # safe fallback
+        return 0
