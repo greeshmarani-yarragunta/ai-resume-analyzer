@@ -4,8 +4,8 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from pathlib import Path
 
-from database import init_db, save_resume, save_analysis
-from extract import (
+from .database import init_db, save_resume, save_analysis
+from .extract import (
     extract_text,
     extract_skills_from_text,
     score_skill_strengths,
